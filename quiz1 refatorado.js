@@ -19,7 +19,7 @@ let numberToWords = (num) => {
     }
 
     while(num > 0) {
-        result = `${numToString(num, 1000)}${getThousands()[thousandCounter]}`
+        result = `${numToString(num, 1000)}${getThousands()[thousandCounter]} ${result}`
         num = Math.trunc(num/1000);
         thousandCounter++;
     }
@@ -38,4 +38,4 @@ let numToString = (num, mod) => {
 }
 
 console.log(numberToWords(2000000))
-console.log(numberToWords(1000000))
+console.log(numberToWords(1125))
