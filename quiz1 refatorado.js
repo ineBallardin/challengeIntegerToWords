@@ -10,12 +10,12 @@ let numberToWords = (num) => {
     }
 
     let thousandCounter = 0;
-    let singularCount = 0
+    let numberOneCounter = 0
     let result = '';
     
     const getThousands = () => {
-        num === 1 ? singularCount++ : 0
-        return singularCount === 1 ? THOUSANDS : THOUSANDS_PLURAL
+        num === 1 ? numberOneCounter++ : 0
+        return numberOneCounter === 1 ? THOUSANDS : THOUSANDS_PLURAL
     }
 
     while(num > 0) {
