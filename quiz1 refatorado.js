@@ -10,41 +10,32 @@ let numberToWords = (num) => {
     }
 
     let thousandCounter = 0;
+    let singularCount = 0
     let result = '';
     
-    const singularExpression = () => {
-
-        
-        if(num % 100000 === 0) {
-            result = `${numToString(num % 1000)}${THOUSANDS[thousandCounter]} ${result}`
-        }
-    }
-
-    const pluralExpression = () => {
-        if (num % 100000 !== 0) {
-            result = `${numToString(num % 1000)}${THOUSANDS_PLURAL[thousandCounter]} ${result}`
-        }
+    const getThousands = () => {
+        num === 1 ? singularCount++ : 0
+        return singularCount === 1 ? THOUSANDS : THOUSANDS_PLURAL
     }
 
     while(num > 0) {
-        singularExpression()
-        pluralExpression()
-
-        num /= 1000;
-        num = Math.trunc(num);
+        result = `${numToString(num, 1000)}${getThousands()[thousandCounter]}`
+        num = Math.trunc(num/1000);
         thousandCounter++;
     }
+
     return result.trim();
 }
 
-let numToString = (num) => {
-    return num === 0 ? '':
-    num < 20 ? `${LESS_THAN_20[num]} ` :
-    num < 100 ? `${TENS[Math.trunc(num / 10)]} ${numToString(num % 10)}` :
-    num === 100 ? `${HUNDREDS[Math.trunc(num / 100)]} ${numToString(num % 100)}` :
-    num >= 100 ? `${HUNDREDS[Math.trunc(num / 100)]} ${numToString(num % 100)}` :
-    num > 100 && num < 200 ? `Cento e ${numToString(num % 100)}` :
-    `${LESS_THAN_20[Math.trunc(num / 100)]} ${numToString(num % 100)}`
+let numToString = (num, mod) => {
+    numMod = num % mod
+    return numMod === 0 ? '':
+    numMod < 20 ? `${LESS_THAN_20[numMod]} ` :
+    numMod < 100 ? `${TENS[Math.trunc(numMod / 10)]} ${numToString(numMod, 10)}` :
+    numMod === 100 ? `${HUNDREDS[Math.trunc(numMod / 100)]} ${numToString(numMod, 100)}` :
+    numMod > 100 && numMod < 200 ? `Cento e ${numToString(numMod, 100)}` :
+    `${LESS_THAN_20[Math.trunc(numMod / 100)]} ${numToString(numMod, 100)}`
 }
 
-console.log(numberToWords(1223))
+console.log(numberToWords(2000000))
+console.log(numberToWords(1000000))
